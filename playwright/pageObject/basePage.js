@@ -17,7 +17,6 @@ export default class BasePage {
         await this.page.locator('a[title="file-to-update.txt"]').last().click();
     }
 
-
     async editTxtFile(editTxt) {
         await this.page.locator('a[data-testid="edit-button"]').click();
         await this.page.locator('.cm-lineWrapping').first().press('ArrowDown');
