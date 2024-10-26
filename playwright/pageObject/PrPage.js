@@ -9,6 +9,7 @@ export default class PrPage {
         this.page = page;
     }
 
+
     async openPr() {
         await expect(this.page.locator('.Subhead-heading').last().getByText("Open a pull request")).toBeVisible();
     }
