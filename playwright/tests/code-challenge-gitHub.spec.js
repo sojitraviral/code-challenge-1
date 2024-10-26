@@ -1,28 +1,36 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
+import { test } from '@playwright/test';
+import { LoginPage, BasePage, PrPage } from '../pageObject/index.js';
 
 test('code challenge for GitHub UI', async ({ page }) => {
 
-  await page.goto('https://github.com/login');
-  await page.locator('#login_field').fill('viralsojitra2901@gmail.com');
-  await page.locator('#password').fill('Viral@2901');
-  await page.locator('input[name="commit"]').click();
+  const lp = new LoginPage(page);
+  const basePage = new BasePage(page);
+  const pr = new PrPage(page);
 
-  await page.goto('https://github.com/sojitraviral/code-challenge-1');
-  await page.locator('a[title="file-to-update.txt"]').last().click();
+  await lp.login('viralsojitra2901@gmail.com', 'Viral@2901');
 
-  await page.locator('a[data-testid="edit-button"]').click();
-  await page.locator('.cm-lineWrapping').first().press('ArrowDown');
-  await page.locator('.cm-lineWrapping > .cm-line').last().fill("viral");
+  // open repo
+  await basePage.openRepo();
 
-  await page.locator('button[type="button"]').getByText("Commit changes...").click();
-  await expect(page.locator("#commit-message-input").getByText('Update file-to-update.txt')).toBeVisible();
-  // console.log("text", text);
+  //open txt file
+  await basePage.openTxtFile();
 
-  await page.locator('.Box-sc-g0xbh4-0 .jZSkdQ').getByText("new branch").check();
-  await page.locator('button[type="button"]').getByText("Propose changes").click();
+  // edit Txt file
+  await basePage.editTxtFile("viral");
+  // code commit in new branch
+  await basePage.commitCode();
+  await basePage.selectNewBranch();
 
-  await expect(page.locator('.Subhead-heading').last().getByText("Open a pull request")).toBeVisible();
-  await page.locator('#pull-requests-tab').click();
-  await expect(page.locator('[data-hovercard-type="pull_request"]').getByText('Update file-to-update.txt')).toBeVisible();
+  await pr.openPr();
+  // get pr count
+  await pr.pullReqCount();
+
+  // create pr
+  await pr.createPr();
+
+  await basePage.selectTab()
+
+  //verify pr count
+  await pr.expectPullReqCount();
 });
