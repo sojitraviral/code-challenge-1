@@ -5,7 +5,7 @@ Thank you for participating in our QA Automation code challenge. Please follow t
 ## Instructions:
 
 1. Clone this repository to your local machine.
-2. Implement your solution using Node.js, TypeScript, and Playwright (you can use a different end-to-end browser testing tool if you are not familiar with Playwright).
+2. Implement your solution using Node.js, Javascript, and Playwright (you can use a different end-to-end browser testing tool if you are not familiar with Playwright).
 3. Update this `README.md` file with instructions on how to run your application locally.
 4. Commit and push your changes to this repository.
 5. Email us when your solution is ready.
@@ -45,7 +45,8 @@ We would like you to create an automated test to validate the functionality of G
  cd playwright
  npm i
  npx playwright install chromium
- npx playwright test github.pr.creation.flow.spec
+ npx playwright code-challenge-gitHub.spec
+
 
 ```
 
